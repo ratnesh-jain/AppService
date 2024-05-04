@@ -88,8 +88,10 @@ open class Service<Target: TargetType> {
                         } else {
                             continuation.resume(throwing: error)
                         }
+                        print(error)
                     }
                 case .failure(let error):
+                    print(error)
                     continuation.resume(throwing: error)
                 }
             }
