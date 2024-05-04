@@ -15,12 +15,14 @@ public struct AppTarget {
     public var method: Moya.Method
     public var task: Moya.Task
     public var authType: AuthorizationType?
+    public var additionalHeaders: [String: String]?
     
     var queries: [URLQueryItem]
     
-    public init(url: URL, path: String, method: Moya.Method, task: Moya.Task = .requestPlain, queries: [URLQueryItem] = [], authType: AuthorizationType? = .none) {
+    public init(url: URL, path: String, headers: [String: String]? = nil, method: Moya.Method, task: Moya.Task = .requestPlain, queries: [URLQueryItem] = [], authType: AuthorizationType? = .none) {
         self.url = url
         self.path = path
+        self.additionalHeaders = headers
         self.method = method
         self.task = task
         self.queries = queries
@@ -40,10 +42,10 @@ extension AppTarget: TargetType, AccessTokenAuthorizable, XAuthorizable {
     }
     
     public var baseURL: URL {
-        return url
+        url
     }
     
     public var headers: [String : String]? {
-        nil
+        additionalHeaders
     }
 }
