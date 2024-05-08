@@ -38,6 +38,7 @@ open class Service<Target: TargetType> {
     
     public init() {}
     public var extraPlugins: [PluginType] = []
+    public var requestClosure: MoyaProvider<Target>.RequestClosure = MoyaProvider<Target>.defaultRequestMapping
     
     private lazy var provider: MoyaProvider<Target> = {
         let networkPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
@@ -47,7 +48,10 @@ open class Service<Target: TargetType> {
         let queryItemResolver = QueryItemResolver()
         var plugins: [PluginType] = [networkPlugin, accessTokenPlugin, queryItemResolver]
         plugins.append(contentsOf: extraPlugins)
-        return .init(plugins: plugins)
+        return .init(
+            requestClosure: requestClosure,
+            plugins: plugins
+        )
     }()
     
     private lazy var dateFormatter: DateFormatter = {
