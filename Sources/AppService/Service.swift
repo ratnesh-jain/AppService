@@ -39,15 +39,23 @@ open class Service<Target: TargetType> {
     public init() {}
     public var extraPlugins: [PluginType] = []
     public var requestClosure: MoyaProvider<Target>.RequestClosure = MoyaProvider<Target>.defaultRequestMapping
+    public var enableLogger: Bool = true
     
     private lazy var provider: MoyaProvider<Target> = {
-        let networkPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
+        
         let accessTokenPlugin = XAuthTokenPlugin { type in
             return self.accessToken(for: type)
         }
         let queryItemResolver = QueryItemResolver()
-        var plugins: [PluginType] = [networkPlugin, accessTokenPlugin, queryItemResolver]
+        var plugins: [PluginType] = [accessTokenPlugin, queryItemResolver]
+        
+        if enableLogger {
+            let networkPlugin = NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))
+            plugins.append(networkPlugin)
+        }
+        
         plugins.append(contentsOf: extraPlugins)
+        
         return .init(
             requestClosure: requestClosure,
             plugins: plugins
