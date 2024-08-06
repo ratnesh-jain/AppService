@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Moya
 
 public enum AuthType {
     case basic
