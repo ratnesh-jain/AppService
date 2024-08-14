@@ -28,7 +28,7 @@ let package = Package(
         .package(url: "https://github.com/Moya/Moya.git", .upToNextMajor(from: "15.0.0")),
     ],
     targets: [
-        .target(name: "AppServiceSupport", dependencies: [.moya]),
+        .target(name: "AppServiceSupport", dependencies: [.moya], swiftSettings: [.enableUpcomingFeature("StrictConcurrency")]),
         .target(name: "AppService", dependencies: [.moya, .tca, "AppServiceSupport"]),
     ]
 )

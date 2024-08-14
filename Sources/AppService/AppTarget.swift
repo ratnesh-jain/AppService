@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Moya
+@preconcurrency import Moya
 
-public struct AppTarget {
+public struct AppTarget: Sendable {
     public var url: URL
     public var path: String
     public var method: Moya.Method
