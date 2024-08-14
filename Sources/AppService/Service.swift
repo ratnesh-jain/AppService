@@ -8,11 +8,11 @@
 import Foundation
 import Moya
 
-public struct AVoid: Codable, Hashable {
+public struct AVoid: Codable, Hashable, Sendable {
     public init() {}
 }
 
-public enum DownloadStream: Equatable {
+public enum DownloadStream: Equatable, Sendable {
     case progressing(Double)
     case completed
 }
