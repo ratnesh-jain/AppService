@@ -20,7 +20,7 @@ struct QueryItemResolver: PluginType {
     func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
         var request = request
         if let queryItems = (target as? QueryItemProvider)?.queryItems, !queryItems.isEmpty {
-            if #available(iOS 16.0, tvOS 16.0, *) {
+            if #available(macOS 13.0, iOS 16.0, tvOS 16.0, watchOS 9.0, *) {
                 request.url = request.url?.appending(queryItems: queryItems)
             } else {
                 request.update(queryItems: queryItems)
