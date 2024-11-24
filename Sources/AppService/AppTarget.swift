@@ -18,7 +18,16 @@ public struct AppTarget: Sendable {
     
     var queries: [URLQueryItem]
     
-    public init(url: URL, path: String, headers: [String: String]? = nil, method: Moya.Method, task: Moya.Task = .requestPlain, queries: [URLQueryItem] = [], authType: AuthorizationType? = .none) {
+    public init(
+        url: URL,
+        path: String,
+        headers: [String: String]? = nil,
+        method: Moya.Method,
+        task: Moya.Task = .requestPlain,
+        queries: [URLQueryItem] = [],
+        authType: AuthorizationType? = .none,
+        additionalHeaders: [String: String]? = nil
+    ) {
         self.url = url
         self.path = path
         self.additionalHeaders = headers
@@ -26,6 +35,7 @@ public struct AppTarget: Sendable {
         self.task = task
         self.queries = queries
         self.authType = authType
+        self.additionalHeaders = additionalHeaders
     }
 }
 
