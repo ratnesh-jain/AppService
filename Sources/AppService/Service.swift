@@ -127,6 +127,19 @@ open class Service<Target: TargetType> {
         }
     }
     
+    public func responseCode(_ target: Target) async throws -> Int {
+        try await withCheckedThrowingContinuation { continuation in
+            self.provider.request(target) { result in
+                switch result {
+                case .success(let response):
+                    continuation.resume(returning: response.statusCode)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
     open func accessToken(for type: TargetType) -> String {
         return ""
     }
